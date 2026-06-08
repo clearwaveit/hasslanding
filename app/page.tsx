@@ -141,11 +141,33 @@ function useHorizontalDrag<T extends HTMLElement>(scrollRef: RefObject<T | null>
   };
 }
 
+function CalendarIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
+      <rect height="14" rx="1.5" stroke="currentColor" strokeWidth="1.2" width="15" x="2.5" y="4.5" />
+      <path d="M2.5 8h15" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M7 2.5v3M13 2.5v3" stroke="currentColor" strokeLinecap="round" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
+function ClockIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.2" />
+      <path d="M10 10V5.5M10 10h3.5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.2" />
+    </svg>
+  );
+}
+
 function Icon({ name }: { name: string }) {
   if (name.toLowerCase().includes("whatsapp")) {
     return (
-      <svg aria-hidden="true" viewBox="0 0 24 24">
-        <path d="M12 3.2a8.5 8.5 0 0 0-7.2 13l-1 3.5 3.6-1a8.5 8.5 0 1 0 4.6-15.7Zm0 1.7a6.8 6.8 0 0 1 5.7 10.5 6.8 6.8 0 0 1-8.1 2.4l-.3-.1-2.1.6.6-2-.2-.3A6.8 6.8 0 0 1 12 4.9Zm-2.3 3.6c-.2 0-.5.1-.8.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.1.2 1.8 2.8 4.4 3.8 2.2.9 2.6.7 3.1.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2-.1-.1-.2-.2-.5-.4l-1.7-.8c-.2-.1-.4-.1-.6.2l-.7.9c-.1.2-.3.2-.6.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.6-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.8-1.8c-.2-.5-.4-.5-.6-.5h-.5Z" />
+      <svg aria-hidden="true" className="whatsapp-icon" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.881 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"
+        />
       </svg>
     );
   }
@@ -160,8 +182,20 @@ function Icon({ name }: { name: string }) {
 
   if (name.toLowerCase().includes("linked")) {
     return (
-      <svg aria-hidden="true" viewBox="0 0 24 24">
-        <path d="M6.4 8.8H3.6V21h2.8V8.8ZM5 3a1.7 1.7 0 1 0 0 3.4A1.7 1.7 0 0 0 5 3Zm16 13.9c0-3.5-1.8-5.2-4.3-5.2-2 0-2.9 1.1-3.4 1.9v-1.6h-2.8V21h2.8v-6.6c0-.4 0-.7.1-1 .3-.7.9-1.4 2-1.4 1.4 0 2 1.1 2 2.7V21H21v-7.1Z" />
+      <svg aria-hidden="true" className="linkedin-icon" viewBox="0 0 24 24" fill="currentColor">
+        <text
+          dominantBaseline="central"
+          fill="currentColor"
+          fontFamily="Arial, Helvetica, sans-serif"
+          fontSize="22"
+          fontWeight="700"
+          letterSpacing="-1.1"
+          textAnchor="middle"
+          x="12"
+          y="12.5"
+        >
+          in
+        </text>
       </svg>
     );
   }
@@ -285,25 +319,56 @@ function RangeSection({
 
 function JourneySection({ content }: { content: PageContent["journey"] }) {
   const sectionRef = useRef<HTMLElement | null>(null);
+  const stickyRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const dragHandlers = useHorizontalDrag(trackRef);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 767);
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
     const section = sectionRef.current;
+    const sticky = stickyRef.current;
     const track = trackRef.current;
 
     if (!section || !track) {
       return;
     }
 
-    if (window.innerWidth <= 767) {
-      section.style.setProperty("--process-travel", "0px");
-      return;
-    }
+    const isMobileView = window.innerWidth <= 767;
+
+    const getViewportWidth = () => {
+      if (isMobileView && sticky) {
+        return sticky.clientWidth;
+      }
+
+      return window.innerWidth;
+    };
 
     const context = gsap.context(() => {
-      const getTravel = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      section.style.setProperty("--process-travel", `${getTravel()}px`);
+      const getTravel = () => Math.max(0, track.scrollWidth - getViewportWidth());
+
+      const getScrollDistance = () => {
+        const travel = getTravel();
+
+        return isMobileView ? travel + Math.round(window.innerHeight * 0.15) : travel;
+      };
+
+      const syncTravel = () => {
+        section.style.setProperty(
+          "--process-travel",
+          isMobileView ? "0px" : `${getTravel()}px`
+        );
+      };
+
+      syncTravel();
 
       gsap.to(track, {
         x: () => -getTravel(),
@@ -311,25 +376,37 @@ function JourneySection({ content }: { content: PageContent["journey"] }) {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${getTravel()}`,
+          end: () => `+=${getScrollDistance()}`,
           scrub: 0.9,
+          pin: isMobileView ? ".process-sticky" : false,
+          pinReparent: isMobileView,
+          anticipatePin: 1,
           invalidateOnRefresh: true,
-          onRefresh: () => {
-            section.style.setProperty("--process-travel", `${getTravel()}px`);
-          },
+          onRefresh: syncTravel,
         },
       });
     }, section);
 
+    const refreshScroll = () => ScrollTrigger.refresh();
+
+    window.addEventListener("load", refreshScroll);
+    window.addEventListener("resize", refreshScroll);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(refreshScroll);
+    });
+
     return () => {
+      window.removeEventListener("load", refreshScroll);
+      window.removeEventListener("resize", refreshScroll);
       context.revert();
     };
   }, []);
 
   return (
     <section className="process-scroll-section" ref={sectionRef}>
-      <div className="process-sticky">
-        <div className="process-track" ref={trackRef} {...dragHandlers}>
+      <div className="process-sticky" ref={stickyRef}>
+        <div className="process-track" ref={trackRef} {...(isMobile ? {} : dragHandlers)}>
           <article className="process-panel process-panel-intro">
             <h2>{content.title}</h2>
           </article>
@@ -358,7 +435,17 @@ function MaterialsSection({
   const sectionRef = useRef<HTMLElement | null>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   const dragHandlers = useHorizontalDrag(carouselRef);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 767);
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -369,14 +456,37 @@ function MaterialsSection({
       return;
     }
 
-    if (window.innerWidth <= 767) {
-      section.style.setProperty("--materials-travel", "0px");
-      return;
-    }
+    const isMobileView = window.innerWidth <= 767;
 
     const context = gsap.context(() => {
-      const getTravel = () => Math.max(0, track.scrollWidth - carousel.clientWidth);
-      section.style.setProperty("--materials-travel", `${getTravel()}px`);
+      const getTravel = () => {
+        if (isMobileView) {
+          return Math.max(0, track.scrollWidth - carousel.clientWidth);
+        }
+
+        const lastCard = track.lastElementChild as HTMLElement | null;
+
+        if (!lastCard) {
+          return 0;
+        }
+
+        return Math.max(0, lastCard.offsetLeft + lastCard.offsetWidth - carousel.clientWidth);
+      };
+
+      const getScrollDistance = () => {
+        const travel = getTravel();
+
+        return isMobileView ? travel + Math.round(window.innerHeight * 0.15) : travel;
+      };
+
+      const syncTravel = () => {
+        section.style.setProperty(
+          "--materials-travel",
+          isMobileView ? "0px" : `${getTravel()}px`
+        );
+      };
+
+      syncTravel();
 
       gsap.to(track, {
         x: () => -getTravel(),
@@ -384,17 +494,29 @@ function MaterialsSection({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: () => `+=${getTravel()}`,
+          end: () => `+=${getScrollDistance()}`,
           scrub: 0.9,
+          pin: isMobileView ? ".materials-sticky" : false,
+          pinReparent: isMobileView,
+          anticipatePin: 1,
           invalidateOnRefresh: true,
-          onRefresh: () => {
-            section.style.setProperty("--materials-travel", `${getTravel()}px`);
-          },
+          onRefresh: syncTravel,
         },
       });
     }, section);
 
+    const refreshScroll = () => ScrollTrigger.refresh();
+
+    window.addEventListener("load", refreshScroll);
+    window.addEventListener("resize", refreshScroll);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(refreshScroll);
+    });
+
     return () => {
+      window.removeEventListener("load", refreshScroll);
+      window.removeEventListener("resize", refreshScroll);
       context.revert();
     };
   }, []);
@@ -408,7 +530,7 @@ function MaterialsSection({
             className="materials-carousel"
             aria-label="Materials carousel"
             ref={carouselRef}
-            {...dragHandlers}
+            {...(isMobile ? {} : dragHandlers)}
           >
             <div className="materials-track" ref={trackRef}>
               {materials.map((material) => (
@@ -435,6 +557,8 @@ function ConsultationForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  const timeSelectRef = useRef<HTMLSelectElement>(null);
 
   const timeSlots = [
     "9:00 AM",
@@ -447,6 +571,45 @@ function ConsultationForm({
     "4:00 PM",
     "5:00 PM",
   ];
+
+  const openDatePicker = () => {
+    const input = dateInputRef.current;
+
+    if (!input) {
+      return;
+    }
+
+    input.focus({ preventScroll: true });
+
+    if (typeof input.showPicker === "function") {
+      try {
+        input.showPicker();
+        return;
+      } catch {
+        // Browser blocked showPicker; fall back to click.
+      }
+    }
+
+    input.click();
+  };
+
+  const openTimePicker = () => {
+    const select = timeSelectRef.current;
+
+    if (!select) {
+      return;
+    }
+
+    select.focus({ preventScroll: true });
+
+    if (typeof select.showPicker === "function") {
+      try {
+        select.showPicker();
+      } catch {
+        // Browser blocked showPicker.
+      }
+    }
+  };
 
   const formatDate = (value: string) => {
     if (!value) {
@@ -508,9 +671,13 @@ function ConsultationForm({
       <input aria-label={content.phone} name="phone" placeholder={content.phone} required />
       <input aria-label={content.email} name="email" placeholder={content.email} required type="email" />
       <div className="form-row">
-        <label className="field-picker">
+        <label className="field-picker" onClick={openDatePicker}>
           <span>{selectedDate ? formatDate(selectedDate) : content.date}</span>
+          <span className="field-picker-icon">
+            <CalendarIcon />
+          </span>
           <input
+            ref={dateInputRef}
             aria-label={content.date}
             name="date"
             onChange={(event) => setSelectedDate(event.target.value)}
@@ -518,9 +685,13 @@ function ConsultationForm({
             value={selectedDate}
           />
         </label>
-        <label className="field-picker">
+        <label className="field-picker field-picker-time" onClick={openTimePicker}>
           <span>{selectedTime || content.time}</span>
+          <span className="field-picker-icon">
+            <ClockIcon />
+          </span>
           <select
+            ref={timeSelectRef}
             aria-label={content.time}
             name="time"
             onChange={(event) => setSelectedTime(event.target.value)}
@@ -707,7 +878,16 @@ export function HomePage({ locale = "en" }: { locale?: Locale }) {
     >
       <div className="hero-shell">
         <section className="hero" id="home">
-          <div className="hero-image" />
+          <video
+            className="hero-image"
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-hidden="true"
+          >
+            <source src="/videos/banner-1.mp4" type="video/mp4" />
+          </video>
           <header className="header">
             <a className="logo-link" href="#" aria-label="HASS Home">
               <img src="/images/hass-logo.svg" alt="HASS Home" />
@@ -742,16 +922,17 @@ export function HomePage({ locale = "en" }: { locale?: Locale }) {
           <a className="hero-copy-cta" href="#contact">
             {content.headerCta}
           </a>
-          <a className="whatsapp-cta" href="https://wa.me/97440403535" target="_blank" rel="noreferrer">
-            <span aria-hidden="true">
-              <Icon name="WhatsApp" />
-            </span>
-            {content.whatsappCta}
-          </a>
         </section>
 
         <div className="announcement">{content.announcement}</div>
       </div>
+
+      <a className="whatsapp-cta" href="https://wa.me/97440403535" target="_blank" rel="noreferrer">
+        <span aria-hidden="true">
+          <Icon name="WhatsApp" />
+        </span>
+        {content.whatsappCta}
+      </a>
 
       <section className="intro" id="about">
         <img className="intro-image" src="/images/about-kitchen.png" alt="" />
@@ -773,6 +954,7 @@ export function HomePage({ locale = "en" }: { locale?: Locale }) {
             <div className="stat" key={number}>
               <StatNumber value={number} />
               <p>{label}</p>
+              <span aria-hidden="true" className="stat-line" />
             </div>
           ))}
         </div>

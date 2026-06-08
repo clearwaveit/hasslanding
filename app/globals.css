@@ -64,9 +64,10 @@ textarea {
 .hero-image {
   position: absolute;
   inset: 0;
-  background-image: url("/images/about-kitchen.png");
-  background-position: center center;
-  background-size: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
 }
 
 .header {
@@ -153,28 +154,29 @@ textarea {
 
 .whatsapp-cta span {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: 50%;
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
 }
 
-.whatsapp-cta svg,
-.social-links svg {
+.social-links svg,
+.social-links .whatsapp-icon,
+.social-links .linkedin-icon {
   display: block;
-  width: 22px;
-  height: 22px;
+  width: 23px;
+  height: 23px;
   fill: currentColor;
 }
 
-.whatsapp-cta span svg {
-  width: 23px;
-  height: 23px;
+.whatsapp-icon {
+  display: block;
+  width: 36px;
+  height: 36px;
 }
 
 .announcement {
@@ -238,27 +240,49 @@ textarea {
 .stats-list {
   display: flex;
   flex-direction: column;
-  gap: 36px;
+  gap: 56px;
+  width: 100%;
   padding-top: 8px;
 }
 
 .stat {
-  display: grid;
-  grid-template-columns: 220px 1fr;
+  display: flex;
   align-items: center;
+  gap: 44px;
+  width: 100%;
 }
 
 .stat span {
+  flex-shrink: 0;
+  min-width: 168px;
   color: var(--dark);
-  font-size: 75.65px;
+  font-size: 89px;
   font-weight: 500;
   line-height: 1;
 }
 
 .stat p {
+  flex-shrink: 0;
   margin: 0;
   color: #000000;
   font-size: 22px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.stat-line {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .stat-line {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 32px;
+    height: 1px;
+    margin-left: 8px;
+    background: #d3d3d3;
+  }
 }
 
 .range-section {
@@ -389,7 +413,6 @@ textarea {
   display: flex;
   gap: 50px;
   width: max-content;
-  padding-right: 220px;
   will-change: transform;
 }
 
@@ -599,11 +622,12 @@ textarea {
 }
 
 .field-input span,
-.field-picker span {
+.field-picker > span {
   color: #494848;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  pointer-events: none;
 }
 
 .field-input input {
@@ -619,7 +643,7 @@ textarea {
   position: relative;
   width: 100%;
   height: 52px;
-  padding: 0 42px 0 16px;
+  padding: 0 16px;
   border: 1px solid rgba(42, 42, 42, 0.1);
   background: #ffffff;
   color: #494848;
@@ -627,16 +651,20 @@ textarea {
   cursor: pointer;
 }
 
-.field-picker::after {
-  position: absolute;
-  top: 50%;
-  right: 16px;
-  width: 9px;
-  height: 9px;
-  content: "";
-  border-right: 1.5px solid #494848;
-  border-bottom: 1.5px solid #494848;
-  transform: translateY(-65%) rotate(45deg);
+.field-picker-icon {
+  z-index: 1;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: #494848;
+  pointer-events: none;
+}
+
+.field-picker-icon svg {
+  display: block;
+  width: 18px;
+  height: 18px;
 }
 
 .field-picker input,
@@ -648,6 +676,11 @@ textarea {
   border: 0;
   opacity: 0;
   cursor: pointer;
+}
+
+.field-picker input[type="date"],
+.field-picker-time select {
+  pointer-events: none;
 }
 
 .field-button img {
@@ -662,7 +695,7 @@ textarea {
   background: var(--red);
   color: #ffffff;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   cursor: pointer;
 }
@@ -721,7 +754,13 @@ textarea {
 .footer-right {
   display: grid;
   gap: 38px;
+  min-width: 0;
   padding-top: 14px;
+}
+
+.footer-brochure {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .footer-social-block {
@@ -731,7 +770,7 @@ textarea {
 
 .social-links {
   display: flex;
-  gap: 12px;
+  gap: 16px;
 }
 
 .social-links a {
@@ -740,12 +779,10 @@ textarea {
   justify-content: center;
   width: 48px;
   height: 48px;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 0;
   border-radius: 50%;
-  color: #ffffff;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
+  background: #ffffff;
+  color: var(--dark);
 }
 
 .footer-legal-links {
@@ -782,10 +819,15 @@ textarea {
 .newsletter {
   display: flex;
   gap: 14px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .newsletter input {
-  width: 500px;
+  flex: 1 1 auto;
+  min-width: 0;
+  width: auto;
+  max-width: 500px;
   height: 56px;
   padding: 0 16px;
   border: 1px solid rgba(255, 255, 255, 0.31);
@@ -799,13 +841,18 @@ textarea {
 }
 
 .newsletter button {
-  width: 223px;
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 200px;
+  max-width: 223px;
   height: 56px;
+  padding: 0 18px;
   border: 0;
   background: var(--red);
   color: #ffffff;
   font-size: 16px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .modal-backdrop {
@@ -890,6 +937,15 @@ textarea {
   text-align: right;
 }
 
+.site-rtl .stat {
+  direction: rtl;
+}
+
+.site-rtl .stat-line {
+  margin-right: 8px;
+  margin-left: 0;
+}
+
 .site-rtl .whatsapp-cta {
   right: auto;
   left: 32px;
@@ -930,12 +986,7 @@ textarea {
 }
 
 .site-rtl .field-picker {
-  padding: 0 16px 0 42px;
-}
-
-.site-rtl .field-picker::after {
-  right: auto;
-  left: 16px;
+  padding: 0 16px;
 }
 
 @media (min-width: 1601px) {
@@ -1031,20 +1082,26 @@ textarea {
   }
 
   .stats-list {
-    gap: 40px;
+    gap: 48px;
     padding-top: 33px;
+    overflow: hidden;
   }
 
   .stat {
-    grid-template-columns: 156px 1fr;
+    gap: 32px;
   }
 
   .stat span {
+    min-width: 118px;
     font-size: 58.6px;
   }
 
   .stat p {
     font-size: 18.7px;
+  }
+
+  .stat-line {
+    margin-left: 6px;
   }
 
   .range-section {
@@ -1191,19 +1248,41 @@ textarea {
   }
 
   .footer-inner {
-    width: 1185px;
-    grid-template-columns: 480px 1fr;
+    width: min(1185px, calc(100% - 64px));
+    grid-template-columns: minmax(0, 480px) minmax(0, 1fr);
     gap: 68px;
+    padding: 82px 0 53px;
   }
 
   .footer-contact h2 {
-    width: 430px;
+    width: auto;
+    max-width: 430px;
     font-size: 34px;
     line-height: 42px;
   }
 
   .footer-brochure h2 {
     font-size: 25.5px;
+  }
+
+  .newsletter {
+    gap: 11px;
+  }
+
+  .newsletter input {
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
+    height: 43px;
+  }
+
+  .newsletter button {
+    flex: 0 0 auto;
+    min-width: 168px;
+    max-width: 200px;
+    height: 43px;
+    padding: 0 14px;
+    font-size: 15px;
   }
 
   .site-rtl .range-image a {
@@ -1224,6 +1303,43 @@ textarea {
   .site-rtl .journey-card div {
     right: 54px;
     left: auto;
+  }
+}
+
+@media (max-width: 1400px) and (min-width: 1200px) {
+  .footer-inner {
+    width: calc(100% - 48px);
+    grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .footer-contact h2 {
+    max-width: 400px;
+    font-size: 32px;
+    line-height: 40px;
+  }
+
+  .footer-brochure h2 {
+    margin-bottom: 28px;
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .newsletter {
+    gap: 10px;
+  }
+
+  .newsletter input {
+    height: 43px;
+    font-size: 15px;
+  }
+
+  .newsletter button {
+    min-width: 155px;
+    max-width: 188px;
+    height: 43px;
+    padding: 0 12px;
+    font-size: 14px;
   }
 }
 
@@ -1285,6 +1401,11 @@ textarea {
     width: 27px;
     height: 27px;
     font-size: 9px;
+  }
+
+  .whatsapp-icon {
+    width: 27px;
+    height: 27px;
   }
 
   .announcement {
@@ -1395,20 +1516,25 @@ textarea {
   }
 
   .stats-list {
-    gap: 31px;
+    gap: 36px;
     padding-top: 18px;
   }
 
   .stat {
-    grid-template-columns: 118px 1fr;
+    gap: 22px;
   }
 
   .stat span {
+    min-width: 88px;
     font-size: 44.2px;
   }
 
   .stat p {
     font-size: 14.2px;
+  }
+
+  .stat-line {
+    margin-left: 6px;
   }
 
   .range-section {
@@ -1653,6 +1779,13 @@ textarea {
     height: 40px;
   }
 
+  .social-links svg,
+  .social-links .whatsapp-icon,
+  .social-links .linkedin-icon {
+    width: 23px;
+    height: 23px;
+  }
+
   .footer-social-block {
     gap: 62px;
   }
@@ -1695,7 +1828,7 @@ textarea {
   }
 
   .hero-image {
-    background-position: center top;
+    object-position: center top;
   }
 
   .header {
@@ -1791,6 +1924,11 @@ textarea {
     font-size: 8px;
   }
 
+  .whatsapp-icon {
+    width: 24px;
+    height: 24px;
+  }
+
   .announcement {
     align-items: flex-start;
     height: 78px;
@@ -1839,12 +1977,15 @@ textarea {
   }
 
   .stat span {
+    display: block;
+    min-width: 0;
     font-size: 32.7px;
   }
 
   .stat p {
     margin-top: 8px;
     font-size: 10.45px;
+    white-space: normal;
   }
 
   .range-section {
@@ -1980,8 +2121,8 @@ textarea {
   }
 
   .materials-scroll-section {
-    height: 100vh;
-    min-height: 640px;
+    height: auto;
+    min-height: 0;
     margin: 0;
     padding: 0;
   }
@@ -1989,9 +2130,12 @@ textarea {
   .materials-sticky {
     position: relative;
     top: auto;
-    height: 100%;
-    min-height: 0;
-    padding: 48px 0 32px;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 48px 0;
+    box-sizing: border-box;
+    background: #ffffff;
   }
 
   .materials-carousel,
@@ -2007,37 +2151,17 @@ textarea {
   }
 
   .materials-carousel {
-    overflow-x: auto;
-    scrollbar-width: none;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    cursor: grab;
-    overscroll-behavior-x: contain;
-    touch-action: pan-x pan-y;
-    user-select: none;
-  }
-
-  .materials-carousel.dragging {
-    scroll-snap-type: none;
-    scroll-behavior: auto;
-    cursor: grabbing;
-  }
-
-  .materials-carousel::-webkit-scrollbar {
-    display: none;
+    overflow: hidden;
   }
 
   .materials-track {
     gap: 33px;
     padding: 0 18px;
-    transform: none !important;
     will-change: transform;
   }
 
   .material-card {
     width: min(82vw, 305px);
-    scroll-snap-align: start;
-    user-select: none;
   }
 
   .material-card img {
@@ -2061,49 +2185,36 @@ textarea {
   }
 
   .process-scroll-section {
-    height: 100vh;
-    min-height: 640px;
-    padding: 48px 0 40px;
+    height: auto;
+    min-height: 0;
+    padding: 0;
     background: var(--dark);
   }
 
   .process-sticky {
     position: relative;
-    height: 100%;
-    min-height: 0;
+    height: 100vh;
+    min-height: 100vh;
+    overflow: hidden;
+    padding: 48px 0;
+    box-sizing: border-box;
+    background: var(--dark);
   }
 
   .process-track {
     display: flex;
     gap: 18px;
-    width: 100%;
+    width: max-content;
+    height: 100%;
     padding: 0 18px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    transform: none !important;
-    cursor: grab;
-    overscroll-behavior-x: contain;
-    touch-action: pan-x pan-y;
-    user-select: none;
-  }
-
-  .process-track.dragging {
-    scroll-snap-type: none;
-    scroll-behavior: auto;
-    cursor: grabbing;
-  }
-
-  .process-track::-webkit-scrollbar {
-    display: none;
+    will-change: transform;
   }
 
   .process-panel-intro {
     flex: 0 0 min(72vw, 268px);
-    height: calc(100vh - 88px);
+    height: calc(100vh - 96px);
     min-height: 552px;
     padding: 0;
-    scroll-snap-align: start;
   }
 
   .process-panel-intro h2 {
@@ -2116,17 +2227,8 @@ textarea {
 
   .journey-card {
     flex: 0 0 min(82vw, 305px);
-    height: calc(100vh - 88px);
+    height: calc(100vh - 96px);
     min-height: 552px;
-    scroll-snap-align: start;
-    user-select: none;
-  }
-
-  .journey-card img,
-  .journey-card div {
-    pointer-events: none;
-    user-select: none;
-    -webkit-user-drag: none;
   }
 
   .journey-card div {
@@ -2281,7 +2383,13 @@ textarea {
   .social-links a {
     width: 36px;
     height: 36px;
-    font-size: 10px;
+  }
+
+  .social-links svg,
+  .social-links .whatsapp-icon,
+  .social-links .linkedin-icon {
+    width: 23px;
+    height: 23px;
   }
 
   .footer-legal-links {
