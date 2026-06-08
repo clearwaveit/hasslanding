@@ -1084,6 +1084,7 @@ textarea {
   .stats-list {
     gap: 48px;
     padding-top: 33px;
+    overflow: hidden;
   }
 
   .stat {
